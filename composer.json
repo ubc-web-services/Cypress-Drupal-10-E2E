@@ -1,5 +1,5 @@
 {
-    "name": "ubc-web-services/Cypress-Drupal-10-E2E",
+    "name": "ubc-web-services/cypress-drupal-10-e2e",
     "type": "cypress",
     "description": "A cypress test suite for UBC WS common components",
     "license": "GPL-2.0-or-later",

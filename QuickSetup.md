@@ -13,16 +13,16 @@ hooks:
     build: |
         set -e
 
-        DIR="vendor/ubc-web-services/Cypress-Drupal-10-E2E/cypress"
+        DIR="vendor/ubc-web-services/cypress-drupal-10-e2e/cypress"
         if [ -d "$DIR" ]; then
-            ln -s vendor/ubc-web-services/Cypress-Drupal-10-E2E/cypress cypress
+            ln -s vendor/ubc-web-services/cypress-drupal-10-e2e/cypress cypress
         fi
 ```
 
-### Add ubc-web-services/Cypress-Drupal-10-E2E
+### Add ubc-web-services/cypress-drupal-10-e2e
 
 ```
-composer require ubc-web-services/Cypress-Drupal-10-E2E
+composer require ubc-web-services/cypress-drupal-10-e2e
 
 platform build
 ```
