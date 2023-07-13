@@ -13,9 +13,13 @@ hooks:
     build: |
         set -e
 
-        DIR="vendor/ubc-web-services/cypress-drupal-10-e2e/cypress"
-        if [ -d "$DIR" ]; then
-            ln -s vendor/ubc-web-services/cypress-drupal-10-e2e/cypress cypress
+        CYP="cypress"
+        if [[ ! -e $CYP ]]; then
+
+            DIR="vendor/ubc-web-services/cypress-drupal-10-e2e/cypress"
+            if [ -d "$DIR" ]; then
+                ln -s vendor/ubc-web-services/cypress-drupal-10-e2e/cypress cypress
+            fi
         fi
 ```
 
@@ -47,9 +51,13 @@ hooks:
     build: |
         set -e
 
-        DIR="vendor/ubc-web-services/cypress-drupal-10-e2e/cypress"
-        if [ -d "$DIR" ]; then
-            ln -s vendor/ubc-web-services/cypress-drupal-10-e2e/cypress cypress
+        CYP="cypress"
+        if [[ ! -e $CYP ]]; then
+
+            DIR="vendor/ubc-web-services/cypress-drupal-10-e2e/cypress"
+            if [ -d "$DIR" ]; then
+                ln -s vendor/ubc-web-services/cypress-drupal-10-e2e/cypress cypress
+            fi
         fi
 
         ln -s cypress-custom cypress/e2e/custom
