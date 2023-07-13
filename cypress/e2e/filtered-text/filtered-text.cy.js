@@ -1,17 +1,9 @@
+import { doLogin } from "../helpers/helpers.cy.js"
+
 describe('Generic Test Suite - Filtered Text', () => {
 
-    // Override error on login page
-    Cypress.on('uncaught:exception', (err, runnable) => {
-        return false;
-    });
-
     beforeEach((() => {
-        cy.visit('/');
-        cy.visit('/user/login');
-        cy.get('#edit-name').click().type(Cypress.env('username'))
-        cy.get('#edit-pass').click().type(Cypress.env('password'), { log: false })
-        cy.get('#edit-submit').click();
-        cy.get('.toolbar-menu-administration').should('exist');
+        cy.doLogin();
         cy.visit('admin/config/content/formats/manage/filtered_text');
     }))
 
