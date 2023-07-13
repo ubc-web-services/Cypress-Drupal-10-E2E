@@ -33,4 +33,10 @@ npm install
 npm run cypress:open
 ```
 
+### Add a custom test suite
+```
+cd cypress/e2e
+mkdir custom
+touch dostuff.cy.js
+```
 
