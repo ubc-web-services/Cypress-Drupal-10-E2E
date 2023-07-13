@@ -34,9 +34,24 @@ npm run cypress:open
 ```
 
 ### Add a custom test suite
+#### Create the cypress-custom folder in the project root
+
 ```
-cd cypress/e2e
-mkdir custom
+mkdir cypress-custom
 touch dostuff.cy.js
+```
+#### Add this to the e2e folder
+```
+hooks:
+
+    build: |
+        set -e
+
+        DIR="vendor/ubc-web-services/cypress-drupal-10-e2e/cypress"
+        if [ -d "$DIR" ]; then
+            ln -s vendor/ubc-web-services/cypress-drupal-10-e2e/cypress cypress
+        fi
+
+        ln -s cypress-custom cypress/e2e/custom
 ```
 
