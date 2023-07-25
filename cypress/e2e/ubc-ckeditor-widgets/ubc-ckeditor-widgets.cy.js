@@ -18,8 +18,6 @@ describe("Checks for ckeditor widget stuff", () => {
 
     it("Checks whether ckeditor widgets have any configuration at all", () => {
         cy.visit('/admin/config/content/ubc-ckeditor-widgets');
-        // check whether text boxes are empty (NOTE: I'm aware that the following code is repetitive, but 
-        // I don't know how to make a for loop for this!!!)
         cy.get('#edit-background-colors').should('not.be.empty');     
         cy.get('#edit-padding-styles').should('not.be.empty');         
         cy.get('#edit-margin-styles').should('not.be.empty');          
