@@ -13,6 +13,18 @@ describe('Generic Test Suite - Status Page', () => {
     // ------------------------------------------------------------
 
     beforeEach((() => {
+        Cypress.on('uncaught:exception', (err, runnable) => {
+            if (err.message.includes("Failed to execute 'observe' on 'IntersectionObserver'")) {
+                return false
+            }
+            if (err.message.includes("drupalSettings is not defined")) {
+                return false
+            }
+            if (err.message.includes("Drupal is not defined")) {
+                return false
+            }
+            return true;
+        })
         cy.doLogin();
         cy.visit('admin/reports/status');
     }))

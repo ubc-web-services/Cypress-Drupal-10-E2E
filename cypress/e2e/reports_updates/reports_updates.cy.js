@@ -1,16 +1,21 @@
+import { doLogin } from "../helpers/helpers.cy.js"
+
 describe("Generic Test Suite - reports/updates", () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
-        return false;
+        if (err.message.includes("Failed to execute 'observe' on 'IntersectionObserver'")) {
+            return false
+        }
+        if (err.message.includes("drupalSettings is not defined")) {
+            return false
+        }
+        if (err.message.includes("Drupal is not defined")) {
+            return false
+        }
+        return true;
     })
 
     beforeEach(() => {
-        // log in before each test
-        cy.visit('/user/login')
-        cy.get('#edit-name').type(Cypress.env('username'))
-        cy.get('#edit-pass').type(Cypress.env('password'))
-        cy.get('#edit-submit').click()
-
-        cy.viewport(1440, 900)
+        cy.doLogin();
     })
 
     // NOTE: if this test fails, Cypress will show the number of unsupported

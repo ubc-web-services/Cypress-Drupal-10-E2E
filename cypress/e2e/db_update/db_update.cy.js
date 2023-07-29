@@ -1,3 +1,5 @@
+import { doLogin } from "../helpers/helpers.cy.js"
+
 describe("Generic Test Suite - reports/updates", () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
         return false;
@@ -5,12 +7,7 @@ describe("Generic Test Suite - reports/updates", () => {
 
     beforeEach(() => {
         // do something before each test
-        cy.visit('/user/login')
-        cy.get('#edit-name').type(Cypress.env('username'))
-        cy.get('#edit-pass').type(Cypress.env('password'))
-        cy.get('#edit-submit').click()
-
-        cy.viewport(1440, 900)
+        cy.doLogin();
     })
 
     it("checks whether database needs an update", () => {

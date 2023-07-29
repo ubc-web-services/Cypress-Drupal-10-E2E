@@ -1,15 +1,27 @@
-import { doLogin } from "../helpers.js"
+import { doLogin } from "../helpers/helpers.cy.js"
 
 describe('Generic Test Suite - Text Formats', () => {
 
     // TODO: Can potentially move these to cypress.env.json
     // Variables to compare formats
     // ------------------------------------------------------------
-    const textFormats = ["ckeditor5", "—"];             // allowed formats for CKEditor 5
+    const textFormats = ["CKEditor 5", "—"];             // allowed formats for CKEditor 5
     const textFormat9 = ["ckeditor5", "—", "CKEditor"]; // allowed formats for CKEditor 4
     // ------------------------------------------------------------
 
     beforeEach((() => {
+      Cypress.on('uncaught:exception', (err, runnable) => {
+        if (err.message.includes("Failed to execute 'observe' on 'IntersectionObserver'")) {
+            return false
+        }
+        if (err.message.includes("drupalSettings is not defined")) {
+            return false
+        }
+        if (err.message.includes("Drupal is not defined")) {
+            return false
+        }
+        return true;
+    })
         cy.doLogin();
         cy.get('.toolbar-menu-administration').should('exist');
         cy.visit('admin/config/content/formats');
