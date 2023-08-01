@@ -14,9 +14,9 @@ Cypress.Commands.add('doLogin', () => {
 });
 
 // Compare versions
-//  - version: current version (string)
-//  - minV: minimum version (array)
-//  - maxV: maximum version (array)
+//  - version: current version (string)     
+//  - minV: minimum version (array)         ex. [9, 5, 0] for 9.5.0
+//  - maxV: maximum version (array)         ex. [10, 4, 4] for 10.4.4
 Cypress.Commands.add('compareVersions', (version, minV, maxV) => {
     const int0 = version.split('.')[0];
     const int1 = version.split('.')[1];

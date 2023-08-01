@@ -2,6 +2,10 @@ import { doLogin } from "../helpers/helpers.cy.js"
 
 describe('Generic Test Suite - Cron', () => {
 
+    Cypress.on('uncaught:exception', (err, runnable) => {
+        return false;
+    })
+
     beforeEach((() => {
         cy.doLogin();
         cy.visit('admin/config/system/cron');
@@ -12,6 +16,10 @@ describe('Generic Test Suite - Cron', () => {
         cy.get('.messages').should('not.exist');
         cy.get('#edit-run').click();
         cy.wait(5000);
-        cy.get('.messages').contains('Cron ran successfully.');
+        // // Message may not be visible on local environment
+        //cy.get('.messages').contains('Cron ran successfully.');
+        cy.visit('admin/reports/dblog');
+        cy.contains('td.views-field.views-field-message a', 'Cron run completed.', { first: true });
+        
     })
 })

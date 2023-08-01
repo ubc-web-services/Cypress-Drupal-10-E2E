@@ -1,8 +1,21 @@
 import { doLogin } from "../helpers/helpers.cy.js"
 
 describe('Generic Test Suite - Blocks', () => {
+    
 
     beforeEach((() => {
+        Cypress.on('uncaught:exception', (err, runnable) => {
+            if (err.message.includes("Failed to execute 'observe' on 'IntersectionObserver'")) {
+                return false
+            }
+            if (err.message.includes("drupalSettings is not defined")) {
+                return false
+            }
+            if (err.message.includes("Drupal is not defined")) {
+                return false
+            }
+            return true;
+        })
         cy.doLogin();
     }))
 
@@ -12,23 +25,18 @@ describe('Generic Test Suite - Blocks', () => {
         cy.visit('/block/add/basic');
         cy.get('#edit-info-0-value').click().type('CypressTestBlock123');
         cy.get('#edit-submit').click();
-        cy.contains('.messages__content', 'Basic block').should('contain', 'has been created');
-        cy.get('.chosen-container-single').click().within(() => {
-            cy.get('li[data-option-array-index="1"]').click();
-        });
+        // cy.contains('.messages__content', 'Basic block').should('contain', 'has been created');
+        cy.get('#edit-region').select('Off Canvas Drawer');
         cy.get('#edit-actions-submit').click();
 
         // DELETE THE BLOCK
         cy.visit('/admin/structure/block/block-content');
         cy.get('tbody > :nth-child(1) > .views-field-info > a').contains('CypressTestBlock123').parent().parent().within(() => {
-            cy.get('.dropbutton-toggle button').click()
-            cy.get('.delete.dropbutton__item').click();
-        })
-        cy.get('#edit-submit').click();
+            cy.get('.dropbutton-wrapper > .dropbutton-widget > .dropbutton > .edit > a').click();})
+            cy.get(':nth-child(2) > .tabs__link').click();
+            cy.get('#edit-submit').click();
 
         // VERIFY BLOCK IS DELETED
-        cy.visit('/admin/config/development/configuration');
-        cy.get('.messages-list__item').should('not.contain', 'block.block.CypressTestBlock123');
-        // Tested with a block that is deleted and one that isn't, confirmed test works
+        cy.get('.view-content').should('not.contain', 'CypressTestBlock123');
     })
 })

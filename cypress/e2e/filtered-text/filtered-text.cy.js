@@ -3,6 +3,18 @@ import { doLogin } from "../helpers/helpers.cy.js"
 describe('Generic Test Suite - Filtered Text', () => {
 
     beforeEach((() => {
+        Cypress.on('uncaught:exception', (err, runnable) => {
+            if (err.message.includes("Failed to execute 'observe' on 'IntersectionObserver'")) {
+                return false
+            }
+            if (err.message.includes("drupalSettings is not defined")) {
+                return false
+            }
+            if (err.message.includes("Drupal is not defined")) {
+                return false
+            }
+            return true;
+        })
         cy.doLogin();
         cy.visit('admin/config/content/formats/manage/filtered_text');
     }))
@@ -19,12 +31,12 @@ describe('Generic Test Suite - Filtered Text', () => {
         cy.get('#edit-roles-authenticated').click();
         cy.get('#edit-roles-anonymous').should('be.checked');
         cy.get('#edit-roles-authenticated').should('be.checked');
-        // TODO: Check if this is ok to do
         // EXIT WITHOUT SAVING
     })
 
     it('Text format is set to CKEditor5', () => {
-        cy.get('#edit_editor_editor_chosen > .chosen-single > :nth-child(1)').should('have.text', 'CKEditor5');
+        cy.get('#edit-editor-editor').should('have.value', 'ckeditor5');
+        // tested with both ckeditor5 and 'none', confirmed test works
     })
 
     it('Styles are configured', () => {
@@ -37,15 +49,12 @@ describe('Generic Test Suite - Filtered Text', () => {
     })
 
     it('Linkit profile is set', () => {
-        // TODO: Check if test is thorough enough
         cy.get('#edit-filters-linkit-status').should('be.checked');
         cy.get('#edit-filters-linkit-status').click();
         cy.get('#edit-filters-linkit-status').should('not.be.checked');
         cy.get('#edit-filters-linkit-status').click();
 
         cy.get('[data-drupal-selector="edit-linkit"] > .tabledrag-cell').should('have.text', 'Linkit URL converter');
-
-        cy.get('strong.vertical-tabs__menu-item-title').contains('Linkit URL converter').click();
         cy.get('#edit-filters-linkit-settings-title').should('be.checked');
     })
 
@@ -54,10 +63,11 @@ describe('Generic Test Suite - Filtered Text', () => {
     })
 
     it('Lazy load images is enabled', () => {
-        // TODO
+        cy.get('#edit-filters-filter-image-lazy-load-status').should('be.checked');
+
     })
 
-    it('Button link styles is disabled', () => {
-        cy.get('#edit-filters-editor-button-link-filter-status').should('not.be.checked');
+    it('Button link styles should not exist', () => {
+        cy.get('#filter-format-edit-form').should('not.contain', 'Button link styles');
     })
 })
