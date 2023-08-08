@@ -50,10 +50,10 @@ describe('Generic Test Suite - Views Editing', () => {
         cy.visit('/admin/structure/views/view/content_items')
 
         cy.get('.edit-details > .views-ajax-link').click()
-        cy.get('.js-form-item-label > [id^=edit-label]').clear().type('HELLO WORLD')
+        cy.get('[id^=edit-label]').clear().type('HELLO WORLD')
 
         // click cancel
-        cy.get('#edit-cancel').click()
+        cy.get('.ui-dialog-buttonset > :nth-child(2)').click()
 
         cy.get('.messages--error').should('not.exist')
         // NOTE: include not js-hide to ignore invisible 'Unsaved Changes' warning 
