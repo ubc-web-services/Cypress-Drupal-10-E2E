@@ -70,7 +70,7 @@ describe('Generic Test Suite - Views Editing', () => {
         // Attempt to create a view using a name already in use
         cy.get('#edit-label').type("Content")   // TODO: is "Content" consistent across sites?
         cy.get('#edit-submit').click()
-        cy.get('#edit-id').type("content")
+        cy.get('#edit-id').clear().type("content")
         cy.get('#edit-submit').click()
 
         cy.get('.messages--error').should('exist')
