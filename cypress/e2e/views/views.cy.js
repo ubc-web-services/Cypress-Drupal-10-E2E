@@ -94,5 +94,6 @@ describe('Generic Test Suite - Views Editing', () => {
         // Check that the edit made doesn't exist anymore
         cy.visit('/admin/structure/views/view/content_items')
         cy.get('.page-title').contains('HELLO WORLD').should('not.exist')
+        cy.get('.page-title').contains('Content Items (Content Item)').should('exist')
     })
 })
