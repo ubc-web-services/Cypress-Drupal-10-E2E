@@ -48,7 +48,7 @@ describe("Sends email through SMTP, checks Drupal messages", () => {
 
         cy.get('.messages--error').should('have.length', 1)
         cy.get('.messages--error').should('contain', 'The provided test e-mail address is not valid.')
-        cy.get('.messages--status > .messages__content').should('contain', 'The SMTP module is active.')
+        cy.get('.messages--status > .messages__content').should('contain', 'SMTP module is active.')
     })
 
 })
