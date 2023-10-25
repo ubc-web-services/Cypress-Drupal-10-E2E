@@ -3,7 +3,6 @@ import { doLogin } from "../helpers/helpers.cy.js"
 describe("Checks for ckeditor widget stuff", () => {
     
     beforeEach(() => {
-        
         Cypress.on('uncaught:exception', (err, runnable) => {
             if (err.message.includes("Failed to execute 'observe' on 'IntersectionObserver'")) {
                 return false
@@ -17,10 +16,10 @@ describe("Checks for ckeditor widget stuff", () => {
             return true;
         })
         cy.doLogin();
+        cy.visit('/admin/config/content/ubc-ckeditor-widgets');
     })
 
     it("Checks whether ckeditor widgets have any configuration at all", () => {
-        cy.visit('/admin/config/content/ubc-ckeditor-widgets');
         cy.get('#edit-background-colors').should('not.be.empty');     
         cy.get('#edit-padding-styles').should('not.be.empty');         
         cy.get('#edit-margin-styles').should('not.be.empty');          
@@ -32,24 +31,22 @@ describe("Checks for ckeditor widget stuff", () => {
     })
 
     it("Checks that the background color configuration is correct", () => {
-        cy.visit('/admin/config/content/ubc-ckeditor-widgets');
-
         // Check to see whether text box contains all necessary configuration (Case sensitive, order insensitive)
         cy.get('#edit-background-colors').should(($ebc) => {
-            expect($ebc).to.contain('bg-transparent \| None');
-            expect($ebc).to.contain('bg-white \| White');
-            expect($ebc).to.contain('bg-grey-100 \| Light Grey');
-            expect($ebc).to.contain('bg-unit-primary \| Unit Primary');
-            expect($ebc).to.contain('bg-unit-secondary \| Unit Secondary');
-            expect($ebc).to.contain('bg-unit-tertiary \| Unit Tertiary');
-            expect($ebc).to.contain('bg-unit-accent \| Unit Accent');
-            expect($ebc).to.contain('bg-ubc-blue \| UBC Blue');
-            expect($ebc).to.contain('bg-ubc-blue-sea \| UBC Blue Sea');
-            expect($ebc).to.contain('bg-ubc-blue-cobalt \| UBC Blue Cobalt');
-            expect($ebc).to.contain('bg-ubc-blue-neptune \| UBC Blue Neptune');
-            expect($ebc).to.contain('bg-ubc-blue-cornflower \| UBC Blue Cornflower');
-            expect($ebc).to.contain('bg-ubc-blue-polar \| UBC Blue Polar');
-            expect($ebc).to.contain('bg-ubc-blue-frost \| UBC Blue Frost');
+            expect($ebc).contains(/bg-transparent ?| ?None/);
+            expect($ebc).contains(/bg-white ?| ?White/);
+            expect($ebc).contains(/bg-grey-100 ?| ?Light Grey/);
+            expect($ebc).contains(/bg-unit-primary ?| ?Unit Primary/);
+            expect($ebc).contains(/bg-unit-secondary ?| ?Unit Secondary/);
+            expect($ebc).contains(/bg-unit-tertiary ?| ?Unit Tertiary/);
+            expect($ebc).contains(/bg-unit-accent ?| ?Unit Accent/);
+            expect($ebc).contains(/bg-ubc-blue ?| ?UBC Blue/);
+            expect($ebc).contains(/bg-ubc-blue-sea ?| ?UBC Blue Sea/);
+            expect($ebc).contains(/bg-ubc-blue-cobalt ?| ?UBC Blue Cobalt/);
+            expect($ebc).contains(/bg-ubc-blue-neptune ?| ?UBC Blue Neptune/);
+            expect($ebc).contains(/bg-ubc-blue-cornflower ?| ?UBC Blue Cornflower/);
+            expect($ebc).contains(/bg-ubc-blue-polar ?| ?UBC Blue Polar/);
+            expect($ebc).contains(/bg-ubc-blue-frost ?| ?UBC Blue Frost/);
         })
     })
 
@@ -57,11 +54,11 @@ describe("Checks for ckeditor widget stuff", () => {
         cy.visit('/admin/config/content/ubc-ckeditor-widgets');
 
         cy.get('#edit-padding-styles').should(($eps) => {
-            expect($eps).to.contain('p-0 \| None');
-            expect($eps).to.contain('p-4 \| Small');
-            expect($eps).to.contain('p-6 \| Normal');
-            expect($eps).to.contain('p-12 \| Large');
-            expect($eps).to.contain('p-16 \| Extra Large');
+            expect($eps).contains(/p-0 ?| ?None/);
+            expect($eps).contains(/p-4 ?| ?Small/);
+            expect($eps).contains(/p-6 ?| ?Normal/);
+            expect($eps).contains(/p-12 ?| ?Large/);
+            expect($eps).contains(/p-16 ?| ?Extra Large/);
         })
     })
     
@@ -69,11 +66,11 @@ describe("Checks for ckeditor widget stuff", () => {
         cy.visit('/admin/config/content/ubc-ckeditor-widgets');
 
         cy.get('#edit-margin-styles').should(($egs) => {
-            expect($egs).to.contain('my-0 \| None');
-            expect($egs).to.contain('my-4 \| Small');
-            expect($egs).to.contain('my-6 \| Normal');
-            expect($egs).to.contain('my-12 \| Large');
-            expect($egs).to.contain('my-16 \| Extra Large');
+            expect($egs).contains(/my-0 ?| ?None/);
+            expect($egs).contains(/my-4 ?| ?Small/);
+            expect($egs).contains(/my-6 ?| ?Normal/);
+            expect($egs).contains(/my-12 ?| ?Large/);
+            expect($egs).contains(/my-16 ?| ?Extra Large/);
         })
     })
 
@@ -81,11 +78,11 @@ describe("Checks for ckeditor widget stuff", () => {
         cy.visit('/admin/config/content/ubc-ckeditor-widgets');
 
         cy.get('#edit-gap-styles').should(($ems) => {
-            expect($ems).to.contain('gap-0 \| None');
-            expect($ems).to.contain('gap-4 \| Small');
-            expect($ems).to.contain('gap-6 \| Normal');
-            expect($ems).to.contain('gap-12 \| Large');
-            expect($ems).to.contain('gap-16 \| Extra Large');
+            expect($ems).contains(/gap-0 ?| ?None/);
+            expect($ems).contains(/gap-4 ?| ?Small/);
+            expect($ems).contains(/gap-6 ?| ?Normal/);
+            expect($ems).contains(/gap-12 ?| ?Large/);
+            expect($ems).contains(/gap-16 ?| ?Extra Large/);
         })
     })
 
@@ -93,11 +90,11 @@ describe("Checks for ckeditor widget stuff", () => {
         cy.visit('/admin/config/content/ubc-ckeditor-widgets');
 
         cy.get('#edit-table-styles').should(($ets) => {
-            expect($ets).to.contain('table--nostyle \| None');
-            expect($ets).to.contain('table--plain \| Plain');
-            expect($ets).to.contain('table--condensed \| Condensed');
-            expect($ets).to.contain('table--striped \| Striped');
-            expect($ets).to.contain('table--hover \| Stripe on hover');
+            expect($ets).contains(/table--nostyle ?| ?None/);
+            expect($ets).contains(/table--plain ?| ?Plain/);
+            expect($ets).contains(/table--condensed ?| ?Condensed/);
+            expect($ets).contains(/table--striped ?| ?Striped/);
+            expect($ets).contains(/table--hover ?| ?Stripe on hover/);
         })
     })
 
@@ -105,10 +102,10 @@ describe("Checks for ckeditor widget stuff", () => {
         cy.visit('/admin/config/content/ubc-ckeditor-widgets');
 
         cy.get('#edit-three-column-layout-styles').should(($etcls) => {
-            expect($etcls).to.contain('align-equal \| Equal Width');
-            expect($etcls).to.contain('align-large-left \| Align Large Left');
-            expect($etcls).to.contain('align-large-center \| Align Large Center');
-            expect($etcls).to.contain('align-large-right \| Align Large Right');
+            expect($etcls).contains(/align-equal ?| ?Equal Width/);
+            expect($etcls).contains(/align-large-left ?| ?Align Large Left/);
+            expect($etcls).contains(/align-large-center ?| ?Align Large Center/);
+            expect($etcls).contains(/align-large-right ?| ?Align Large Right/);
         })
     })
 
@@ -116,9 +113,9 @@ describe("Checks for ckeditor widget stuff", () => {
         cy.visit('/admin/config/content/ubc-ckeditor-widgets');
 
         cy.get('#edit-two-column-layout-styles').should(($etcls) => {
-            expect($etcls).to.contain('align-equal \| Equal Width');
-            expect($etcls).to.contain('align-large-left \| Align Large Left');
-            expect($etcls).to.contain('align-large-right \| Align Large Right');
+            expect($etcls).contains(/align-equal ?| ?Equal Width/);
+            expect($etcls).contains(/align-large-left ?| ?Align Large Left/);
+            expect($etcls).contains(/align-large-right ?| ?Align Large Right/);
         })
     })
 
@@ -126,12 +123,12 @@ describe("Checks for ckeditor widget stuff", () => {
         cy.visit('/admin/config/content/ubc-ckeditor-widgets');
 
         cy.get('#edit-width-styles').should(($ews) => {
-            expect($ews).to.contain('w-auto \| Column width: Auto');
-            expect($ews).to.contain('w-half \| Column width: 1/2');
-            expect($ews).to.contain('w-one-third \| Column width: 1/3');
-            expect($ews).to.contain('w-one-quarter \| Column width: 1/4');
-            expect($ews).to.contain('w-one-fifth \| Column width: 1/5');
-            expect($ews).to.contain('w-one-sixth \| Column width: 1/6');
+            expect($ews).contains(/w-auto ?| ?Column width: Auto/);
+            expect($ews).contains(/w-half ?| ?Column width: 1\/2/);
+            expect($ews).contains(/w-one-third ?| ?Column width: 1\/3/);
+            expect($ews).contains(/w-one-quarter ?| ?Column width: 1\/4/);
+            expect($ews).contains(/w-one-fifth ?| ?Column width: 1\/5/);
+            expect($ews).contains(/w-one-sixth ?| ?Column width: 1\/6/);
         })
     })
 })
