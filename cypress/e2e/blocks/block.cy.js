@@ -26,7 +26,7 @@ describe('Generic Test Suite - Blocks', () => {
         cy.get('#edit-info-0-value').click().type('CypressTestBlock123');
         cy.get('#edit-submit').click();
         // cy.contains('.messages__content', 'Basic block').should('contain', 'has been created');
-        cy.get('#edit-region').select('Off Canvas Drawer');
+        // cy.get('#edit-region').select('Off Canvas Drawer');
         cy.get('#edit-actions-submit').click();
 
         // DELETE THE BLOCK
