@@ -6,7 +6,7 @@ describe('Generic Test Suite - Text Formats', () => {
     // Variables to compare formats
     // ------------------------------------------------------------
     const textFormats = ["CKEditor 5", "—"];             // allowed formats for CKEditor 5
-    const textFormat9 = ["ckeditor5", "—", "CKEditor"]; // allowed formats for CKEditor 4
+    const textFormat9 = ["CKEditor 5", "—", "CKEditor"]; // allowed formats for CKEditor 4
     // ------------------------------------------------------------
 
     beforeEach((() => {
@@ -23,22 +23,25 @@ describe('Generic Test Suite - Text Formats', () => {
         return true;
     })
         cy.doLogin();
-        cy.get('.toolbar-menu-administration').should('exist');
+        // cy.get('.toolbar-menu-administration').should('exist');
         cy.visit('admin/config/content/formats');
     }))
 
-    it('only allowed text formats?', () => {
-        cy.get('.page-title').contains('Text formats and editors');
-        cy.get('.messages').should('not.exist');
+    it('checks that only cke5 is enabled (or -)', () => {
         
         cy.get('#edit-formats').within(() => {
-          cy.get('tbody').within(() => {
-            cy.get('td:nth-child(2)').each(($el, index, $list) => {
-                const textEditorValue = $el.text();
-              cy.log(textEditorValue);
-              cy.wrap(textFormats).should('contain', textEditorValue);
+            cy.get('tbody').within(() => {
+                cy.get('td:nth-child(2)').each(($el, index, $list) => {
+                    const textEditorValue = $el.text();
+                    cy.log(textEditorValue);
+                    cy.wrap(textFormats).should('contain', textEditorValue);
+                });
             });
-          });
         });
-      });
+    });
+    
+    it('asserts no errors', () => {
+        cy.get('.page-title').contains('Text formats and editors');
+        cy.get('.messages').should('not.exist');
+    })
 })

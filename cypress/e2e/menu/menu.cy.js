@@ -20,12 +20,12 @@ describe('Generic Test Suite - Menu', () => {
 
     it('can access menu page', () => {
         cy.visit('admin/structure/menu/manage/main');
-        cy.get('.page-title').contains('Edit menu Main menu');
+        cy.get('.page-title').contains('Edit menu Main navigation');
     })
 
-    it('assert no errors', () => {
+    it('assert no errors in main menu page', () => {
         cy.visit('admin/structure/menu/manage/main');
-        cy.get('.page-title').contains('Edit menu Main menu');
+        cy.get('.page-title').contains('Edit menu Main navigation');
         cy.get('.messages').should('not.exist');
     })
 
@@ -34,7 +34,7 @@ describe('Generic Test Suite - Menu', () => {
         cy.get('.page-title').contains('Menus');
     })
 
-    it('assert no errors', () => {
+    it('assert no errors in menu list page', () => {
         cy.visit('admin/structure/menu');
         cy.get('.page-title').contains('Menus');
         cy.get('.messages').should('not.exist');

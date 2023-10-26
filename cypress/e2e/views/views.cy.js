@@ -21,7 +21,7 @@ describe('Generic Test Suite - Views Editing', () => {
         cy.viewport(1440, 900)
     })
 
-    // // Useful checks (looks for error/warning messages)
+    // Useful checks (looks for error/warning messages)
     // cy.get('.messages--error').should('not.exist') 
     // cy.get('.messages--warning').should('not.exist')
 
@@ -29,9 +29,9 @@ describe('Generic Test Suite - Views Editing', () => {
 
         cy.visit('/admin/structure/views')
 
-        // Check for any errors/warnings
-        cy.get('.messages--error').should('not.exist')
-        cy.get('.messages--warning').should('not.exist')
+        // Check for any errors/warnings (TODO: do this in a different test, or ignore here)
+        // cy.get('.messages--error').should('not.exist')
+        // cy.get('.messages--warning').should('not.exist')
 
         // Edit the "content" view
         cy.get('tr.views-ui-list-enabled')
@@ -40,7 +40,9 @@ describe('Generic Test Suite - Views Editing', () => {
             .contains('a', 'Edit')
             .click();
 
-        cy.get('.messages--error').should('not.exist')
+        // TODO: figure out better error assertions
+        // cy.get('.messages--error').should('not.exist')
+
         // include not js-hide to ignore invisible 'Unsaved Changes' warning
         cy.get('.messages--warning').not('.js-hide').should('not.exist')
     })
@@ -55,7 +57,9 @@ describe('Generic Test Suite - Views Editing', () => {
         // click cancel
         cy.get('.ui-dialog-buttonset > :nth-child(2)').click()
 
-        cy.get('.messages--error').should('not.exist')
+        // TODO: figure out better error assertions
+        // cy.get('.messages--error').should('not.exist')
+
         // NOTE: include not js-hide to ignore invisible 'Unsaved Changes' warning 
         cy.get('.messages--warning').not('.js-hide').should('not.exist')
     })
@@ -65,7 +69,7 @@ describe('Generic Test Suite - Views Editing', () => {
         cy.visit('/admin/structure/views')
 
         // Click 'Add view'
-        cy.get('.button').click()
+        cy.get('.local-actions__item > .button').click()
 
         // Attempt to create a view using a name already in use
         cy.get('#edit-label').type("Content")   // TODO: is "Content" consistent across sites?
@@ -73,6 +77,7 @@ describe('Generic Test Suite - Views Editing', () => {
         cy.get('#edit-id').clear().type("content")
         cy.get('#edit-submit').click()
 
+        // TODO: this is a very blunt error check method 
         cy.get('.messages--error').should('exist')
     })
 

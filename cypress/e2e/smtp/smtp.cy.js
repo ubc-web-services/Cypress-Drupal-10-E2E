@@ -1,3 +1,5 @@
+import { doLogin } from "../helpers/helpers.cy.js" 
+
 describe("Sends email through SMTP, checks Drupal messages", () => {
     
     beforeEach(() => {
@@ -7,19 +9,16 @@ describe("Sends email through SMTP, checks Drupal messages", () => {
             }
             return true;
         })
-        cy.visit('/user/login')
-        cy.get('#edit-name').type(Cypress.env('username'))
-        cy.get('#edit-pass').type(Cypress.env('password'))
-        cy.get('#edit-submit').click()
-
-        cy.viewport(1440, 900)
+        
+        cy.doLogin();
+        cy.viewport(1440, 900);
+        cy.visit("/admin/config/system/smtp");
     })
 
     it("Sends test email to fake email, checks Drupal messages", () => {
 
         const email = 'test_email@example.com'
 
-        cy.visit("/admin/config/system/smtp")
 
         // Catch exception for if status message box has more than one message
         Cypress.on('fail', (error, runnable) => {
@@ -41,8 +40,6 @@ describe("Sends email through SMTP, checks Drupal messages", () => {
         
         const email = 'asdf'
         
-        cy.visit("/admin/config/system/smtp")
-
         cy.get('#edit-smtp-test-address').type(email)
         cy.get('#edit-submit').click()
 
@@ -51,4 +48,8 @@ describe("Sends email through SMTP, checks Drupal messages", () => {
         cy.get('.messages--status > .messages__content').should('contain', 'SMTP module is active.')
     })
 
+    it("Resets smtp test email address so it's not captured by config", () => {
+        // cy.get('#edit-smtp-test-address').type('');
+        cy.get('#edit-submit').click();
+    })
 })

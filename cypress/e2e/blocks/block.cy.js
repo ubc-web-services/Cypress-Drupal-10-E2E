@@ -17,12 +17,11 @@ describe('Generic Test Suite - Blocks', () => {
             return true;
         })
         cy.doLogin();
+        cy.visit('/block/add/basic');
     }))
 
     it('add a block', () => {
-
         // ADD A BLOCK
-        cy.visit('/block/add/basic');
         cy.get('#edit-info-0-value').click().type('CypressTestBlock123');
         cy.get('#edit-submit').click();
         // cy.contains('.messages__content', 'Basic block').should('contain', 'has been created');

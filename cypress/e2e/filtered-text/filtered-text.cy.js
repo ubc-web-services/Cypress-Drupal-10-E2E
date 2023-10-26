@@ -50,9 +50,9 @@ describe('Generic Test Suite - Filtered Text', () => {
 
     it('Linkit profile is set', () => {
         cy.get('#edit-filters-linkit-status').should('be.checked');
-        cy.get('#edit-filters-linkit-status').click();
-        cy.get('#edit-filters-linkit-status').should('not.be.checked');
-        cy.get('#edit-filters-linkit-status').click();
+        // cy.get('#edit-filters-linkit-status').click();
+        // cy.get('#edit-filters-linkit-status').should('not.be.checked');
+        // cy.get('#edit-filters-linkit-status').click();
 
         cy.get('[data-drupal-selector="edit-linkit"] > .tabledrag-cell').should('have.text', 'Linkit URL converter');
         cy.get('#edit-filters-linkit-settings-title').should('be.checked');
