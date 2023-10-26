@@ -1,4 +1,4 @@
-import { doLogin } from "../helpers.js"
+import { doLogin } from "../helpers/helpers.cy.js"
 
 describe('Generic Test Suite - General', () => {
 
