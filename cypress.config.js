@@ -1,5 +1,3 @@
-// CONFIG SHOULD LOOK LIKE THIS (change baseURL as needed)
-
 const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
@@ -9,7 +7,12 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       return require('./cypress/plugins/index.js')(on, config)
     },
-    // baseUrl: 'https://example.it.ubc.ca.lndo.site',
-    experimentalRunAllSpecs: true
+    baseUrl: 'https://example.it.ubc.ca.lndo.site',
+
+    // To run all tests
+    experimentalRunAllSpecs: true,
+    
+    // Can reduce failure time here
+    defaultCommandTimeout: 2000
   },
 })

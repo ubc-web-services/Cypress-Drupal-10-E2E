@@ -1,6 +1,6 @@
 import { doLogin } from "../helpers/helpers.cy.js"
 
-describe("Checks for ckeditor widget stuff", () => {
+describe("Checks for ckeditor widget stuff", {testIsolation: false}, () => {
     
     beforeEach(() => {
         Cypress.on('uncaught:exception', (err, runnable) => {

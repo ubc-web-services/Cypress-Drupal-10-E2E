@@ -30,7 +30,7 @@ describe('Generic Test Suite - General', () => {
         cy.get('#edit-name').click().type(Cypress.env('username'))
         cy.get('#edit-pass').click().type(Cypress.env('password'), { log: false })
         cy.get('#edit-submit').click();
-        cy.wait(2000);
+        // cy.wait(2000);
         cy.get('.toolbar-menu-administration').should('exist');
     })
 

@@ -1,22 +1,8 @@
 import { doLogin } from "../helpers/helpers.cy.js"
 
-describe("Does add page stuff", () => {
+describe("Does add page stuff", {testIsolation: false}, () => {
     
     beforeEach(() => {
-        
-        Cypress.on('uncaught:exception', (err, runnable) => {
-            if (err.message.includes("Failed to execute 'observe' on 'IntersectionObserver'")) {
-                return false
-            }
-            if (err.message.includes("drupalSettings is not defined")) {
-                return false
-            }
-            if (err.message.includes("Drupal is not defined")) {
-                return false
-            }
-            return true;
-        })
-
         cy.doLogin();
         cy.visit('/node/add/ubc_page');
     })

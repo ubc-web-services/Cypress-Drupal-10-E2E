@@ -1,7 +1,7 @@
 import { compareVersions } from "../helpers/helpers.cy.js"
 import { doLogin } from "../helpers/helpers.cy.js"
 
-describe('Generic Test Suite - Status Page', () => {
+describe('Generic Test Suite - Status Page', {testIsolation: false}, () => {
 
     // TODO: Can potentially move these to cypress.env.json
     // Variables to compare versions

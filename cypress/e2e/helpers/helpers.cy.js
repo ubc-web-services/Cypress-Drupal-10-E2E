@@ -5,12 +5,13 @@ Cypress.Commands.add('doLogin', () => {
         }
     })
 
-    cy.visit('/user/login');
-    cy.get('#edit-name').click().type(Cypress.env('username'))
-    cy.get('#edit-pass').click().type(Cypress.env('password'), { log: false })
-    cy.get('#edit-submit').click();
-
-    cy.viewport(1440, 900);
+    cy.session("Login", () => {
+        cy.visit('/user/login');
+        cy.get('#edit-name').click().type(Cypress.env('username'))
+        cy.get('#edit-pass').click().type(Cypress.env('password'), { log: false })
+        cy.get('#edit-submit').click();
+        cy.viewport(1440, 900);
+    })
 });
 
 // Compare versions

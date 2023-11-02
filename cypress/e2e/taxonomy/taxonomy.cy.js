@@ -38,14 +38,14 @@ describe('Generic Test Suite - Taxonomy', () => {
             // Reads the value of the field, and then types it back in
             // TODO: check if this should be disabled, in case it may modify content
             cy.get('#edit-name').invoke('val').then((text) => {
-                cy.wait(1000);
+                // cy.wait(1000);
                 cy.get('#edit-name').clear().type(text);
             })
 
             // Reads the value of the field, and then types it back in
             // TODO: check if this should be disabled, in case it may modify content
             cy.get('#edit-description').invoke('val').then((text) => {
-                cy.wait(1000);
+                // cy.wait(1000);
                 cy.get('#edit-description').clear().type(text);
             })
             cy.get('#edit-submit').click();
