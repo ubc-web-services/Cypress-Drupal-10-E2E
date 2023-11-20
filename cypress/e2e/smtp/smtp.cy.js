@@ -11,7 +11,6 @@ describe("Sends email through SMTP, checks Drupal messages", () => {
         })
         
         cy.doLogin();
-        cy.viewport(1440, 900);
         cy.visit("/admin/config/system/smtp");
     })
 
@@ -21,19 +20,19 @@ describe("Sends email through SMTP, checks Drupal messages", () => {
 
 
         // Catch exception for if status message box has more than one message
-        Cypress.on('fail', (error, runnable) => {
-            if (error.message.includes('.messages--status')) {
-                cy.get('.messages__list').should('contain', "SMTP module is active.")
-            }
-        })
-        // If there are multiple (green) status messages, the next line will fail
+        // Cypress.on('fail', (error, runnable) => {
+        //     if (error.message.includes('.messages--status')) {
+        //         cy.get('.messages__list').should('contain', "SMTP module is active.")
+        //     } else return false;
+        // })
+        // TODO: If there are multiple (green) status messages, the next line will fail
         cy.get('.messages--status > .messages__content').should('contain', 'SMTP module is active.')
         cy.get('#edit-smtp-test-address').type(email)
         cy.get('#edit-submit').click()
         
         cy.get('.messages__list').should('contain', 'SMTP module is active.')
         cy.get('.messages__list').should('contain', `A test e-mail has been sent to ${email} via SMTP.`)
-        cy.get('.messages--error').should('not.exist')  // no errors hopefully!
+        cy.get('.messages--error').should('not.exist') 
     })
 
     it("Attempts to send a message to an invalid test email; checks for errors", () => {
