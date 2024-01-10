@@ -1,31 +1,15 @@
 import { doLogin } from "../helpers/helpers.cy.js"
 
 describe('Generic Test Suite - Blocks', () => {
-    
-
     beforeEach((() => {
-        Cypress.on('uncaught:exception', (err, runnable) => {
-            if (err.message.includes("Failed to execute 'observe' on 'IntersectionObserver'")) {
-                return false
-            }
-            if (err.message.includes("drupalSettings is not defined")) {
-                return false
-            }
-            if (err.message.includes("Drupal is not defined")) {
-                return false
-            }
-            return true;
-        })
         cy.doLogin();
         cy.visit('/block/add/basic');
     }))
 
-    it('add a block', () => {
+    it('adds a block', () => {
         // ADD A BLOCK
         cy.get('#edit-info-0-value').click().type('CypressTestBlock123');
         cy.get('#edit-submit').click();
-        // cy.contains('.messages__content', 'Basic block').should('contain', 'has been created');
-        // cy.get('#edit-region').select('Off Canvas Drawer');
         cy.get('#edit-actions-submit').click();
 
         // DELETE THE BLOCK

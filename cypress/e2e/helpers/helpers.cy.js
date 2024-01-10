@@ -1,3 +1,5 @@
+// NOT A TEST FILE - these are cypress helper functions used in tests
+
 Cypress.Commands.add('doLogin', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
         if (err.message.includes("Failed to execute 'observe' on 'IntersectionObserver'")) {
