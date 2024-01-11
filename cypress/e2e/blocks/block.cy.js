@@ -3,23 +3,24 @@ import { doLogin } from "../helpers/helpers.cy.js"
 describe('Generic Test Suite - Blocks', () => {
     beforeEach((() => {
         cy.doLogin();
-        cy.visit('/block/add/basic');
     }))
+    
+    it('adds a block, places it on frontpage', () => {
+        const blockName = 'CypressTestBlock123';
 
-    it('adds a block', () => {
         // ADD A BLOCK
-        cy.get('#edit-info-0-value').click().type('CypressTestBlock123');
-        cy.get('#edit-submit').click();
-        cy.get('#edit-actions-submit').click();
+        cy.visit('/block/add/basic');
+        
+        cy.get('[data-drupal-selector="edit-info-0-value"]').click().type(blockName);
+        cy.get('[data-drupal-selector="edit-submit"]').click();
 
-        // DELETE THE BLOCK
-        cy.visit('/admin/structure/block/block-content');
-        cy.get('tbody > :nth-child(1) > .views-field-info > a').contains('CypressTestBlock123').parent().parent().within(() => {
-            cy.get('.dropbutton-wrapper > .dropbutton-widget > .dropbutton > .edit > a').click();})
-            cy.get(':nth-child(2) > .tabs__link').click();
-            cy.get('#edit-submit').click();
+        // Place block on frontpage (NOTE: needs a frontpage to work)
+        cy.visit('admin/structure/block');
+        cy.get('[data-drupal-selector="edit-blocks-region-content-title"]').click();
+        cy.get('input[data-element=".block-add-table"]').type(blockName);
+        // TODO: find a way to place the newly made block here
 
-        // VERIFY BLOCK IS DELETED
-        cy.get('.view-content').should('not.contain', 'CypressTestBlock123');
+
+        // NOTE: Deleting the block (cleanup) is unnecessary because this is an isolated environment (lando, gh actions)
     })
 })

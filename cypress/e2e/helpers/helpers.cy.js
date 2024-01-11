@@ -1,5 +1,8 @@
 // NOT A TEST FILE - these are cypress helper functions used in tests
 
+/*
+Logs into admin through the UI (and changes viewport)
+*/
 Cypress.Commands.add('doLogin', () => {
     Cypress.on('uncaught:exception', (err, runnable) => {
         if (err.message.includes("Failed to execute 'observe' on 'IntersectionObserver'")) {
@@ -42,4 +45,23 @@ Cypress.Commands.add('compareVersions', (version, minV, maxV) => {
         cy.log("Version " + version + " is not within range (" + minV + " - " + maxV + ")");
     }
     expect(equal).to.equal(true);
-})
+});
+
+/*
+Allows cypress to run drush commands
+
+Example:
+Cypress.Commands.add('loginUserByUid', (uid) => { 
+ cy.drush('user-login', [], { uid, uri: Cypress.env('baseUrl') })
+   .its('stdout')
+   .then(function (url) {
+     cy.visit(url);
+   });
+}); 
+
+TODO: TEST THIS, I borrowed it from https://bitbucket.org/aten_cobadger/cypress-for-drupal/src/a06749c95f400b841ab96faa49a8fe09bcd20577/tests/cypress/support/commands.js#lines-62
+*/
+Cypress.Commands.add('drush', (command, args = [], options = {}) => {
+    return cy.exec(`${Cypress.env('drushCommand')} ${command} ${stringifyArguments(args)} ${stringifyOptions(options)} -y`)
+});
+
