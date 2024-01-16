@@ -13,6 +13,11 @@ module.exports = defineConfig({
     experimentalRunAllSpecs: true,
     
     // Can reduce failure time here
-    defaultCommandTimeout: 2000
+    defaultCommandTimeout: 2000,
+
+    // Exclude helper commands from potentially being run
+    excludeSpecPattern: [
+      "cypress/e2e/helpers/"
+    ]
   },
 })
