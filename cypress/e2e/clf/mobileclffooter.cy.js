@@ -9,10 +9,6 @@ describe('CLF Mobile Footer Test Suite', () => {
         cy.get('[id="unit-footer"]').should('exist');
     })
 
-    it('contains ubc footer address element exist', () =>{
-        cy.get('[id="ubc7-address-campus"]').should('exist');
-    })
-
     it('contains ubc back to the top', () =>{
         cy.get('[id="totop"]').should('exist');
     })

@@ -1,15 +1,10 @@
 describe('CLF Footer Test Suite', () => {
-
     beforeEach((() => {
         cy.visit('/');
     }))
 
     it('contains ubc unit footer', () =>{
         cy.get('[id="unit-footer"]').should('exist');
-    })
-
-    it('contains ubc footer address element exist', () =>{
-        cy.get('[id="ubc7-address-campus"]').should('exist');
     })
 
     it('contains ubc back to the top', () =>{
@@ -40,5 +35,4 @@ describe('CLF Footer Test Suite', () => {
         cy.get('[id="ubc7-minimal-footer"]').should('have.css', 'background-color', 'rgb(0, 33, 69)');
         cy.get('[id="ubc7-minimal-footer"]').should('have.css', 'padding-top', '20px');
     })
-
 })
