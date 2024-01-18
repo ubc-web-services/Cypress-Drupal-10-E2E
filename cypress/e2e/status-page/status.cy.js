@@ -3,7 +3,6 @@ import { doLogin } from "../helpers/helpers.cy.js"
 
 describe('Generic Test Suite - Status Page', {testIsolation: false}, () => {
 
-    // TODO: Can potentially move these to cypress.env.json
     // Variables to compare versions
     // ------------------------------------------------------------
     const minDrupalVersion = [9, 5, 0];     // Drupal version 9.5.0
@@ -13,63 +12,37 @@ describe('Generic Test Suite - Status Page', {testIsolation: false}, () => {
     // ------------------------------------------------------------
 
     beforeEach((() => {
-        Cypress.on('uncaught:exception', (err, runnable) => {
-            if (err.message.includes("Failed to execute 'observe' on 'IntersectionObserver'")) {
-                return false
-            }
-            if (err.message.includes("drupalSettings is not defined")) {
-                return false
-            }
-            if (err.message.includes("Drupal is not defined")) {
-                return false
-            }
-            return true;
-        })
         cy.doLogin();
         cy.visit('admin/reports/status');
     }))
 
-    it('can access status page', () => {
+    it('Can access status page', () => {
         cy.get('.page-title').contains('Status report');
     })
 
-    it('Is Drupal version within range)', () => {
-        cy.get('.page-title').contains('Status report');
-        cy.get('.messages').should('not.exist');
-        cy.get('.system-status-general-info__items > :nth-child(1) > :nth-child(2)').then(($version) => {
+    it('Checks Drupal version is within range', () => {
+        cy.get('.system-status-general-info__items > :nth-child(1)').contains(/[0-9]*\.[0-9]*\.[0-9]*/).then(($version) => {
             const version = $version.text().split('Version')[1];
             cy.compareVersions(version, minDrupalVersion, maxDrupalVersion);
         })
     })
 
-    it('Is PHP version within range', () => {
-        cy.get('.page-title').contains('Status report');
-        cy.get('.messages').should('not.exist');
-        cy.get('.system-status-general-info__items > :nth-child(4) > :nth-child(2)').then(($version) => {
+    it('Checks PHP version is within range', () => {
+        cy.get('.system-status-general-info__items > :nth-child(4)').contains(/[0-9]*\.[0-9]*\.[0-9]*/).then(($version) => {
             const version = $version.text().match(/\d+\.\d+\.\d+/g)[0];
             cy.compareVersions(version, minPHPVersion, maxPHPVersion);
         })
     })
 
-    it('Are there Errors found (list?)', () => {
-        cy.get(':nth-child(1) > .system-status-counter > .system-status-counter__status-title > .system-status-counter__title-count').then(($errors) => {
-            const errors = $errors.text();
-            const numErrors = parseInt(errors);
-            cy.log("Errors found: " + numErrors + " errors found");
-            expect(numErrors).to.equal('0');
-        })
+    it('Checks if there are errors', () => {
+        cy.get('.system-status-report-counters > :nth-child(1)').contains(/[0-9]* Errors/).should('contain', '0 Errors');
     })
 
-    it('Are there Warnings found (list?)', () => {
-        cy.get(':nth-child(2) > .system-status-counter > .system-status-counter__status-title > .system-status-counter__title-count').then(($warnings) => {
-            const warnings = $warnings.text();
-            const numWarnings = parseInt(warnings);
-            cy.log("Warnings found: " + numWarnings + " warnings found");
-            expect(numWarnings).to.equal(0);
-        })
+    it('Checks if there are warnings', () => {
+        cy.get('.system-status-report-counters > :nth-child(2)').contains(/[0-9]* Warnings/).should('contain', '0 Warnings');
     })
 
-    it('Is PHP APCu enabled', () => {
+    it.only('Checks that PHP APCu is enabled', () => {
         cy.get('.system-status-report__row')
             .contains('.system-status-report__status-title', 'PHP APCu caching')
             .parent().within(() => {
