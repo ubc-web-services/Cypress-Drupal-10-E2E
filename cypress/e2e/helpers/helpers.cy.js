@@ -4,6 +4,8 @@
 Logs into admin through the UI (and changes viewport)
 */
 Cypress.Commands.add('doLogin', () => {
+    const test_password = 'ACCOUNT-PASS';
+
     Cypress.on('uncaught:exception', (err, runnable) => {
         if (err.message.includes("Failed to execute 'observe' on 'IntersectionObserver'")) {
             return false;
@@ -12,8 +14,8 @@ Cypress.Commands.add('doLogin', () => {
 
     cy.session("Login", () => {
         cy.visit('/user/login');
-        cy.get('#edit-name').click().type(Cypress.env('username'))
-        cy.get('#edit-pass').click().type(Cypress.env('password'), { log: false })
+        cy.get('#edit-name').click().type('admin')
+        cy.get('#edit-pass').click().type(test_password, { log: false })
         cy.get('#edit-submit').click();
         cy.viewport(1440, 900);
     })

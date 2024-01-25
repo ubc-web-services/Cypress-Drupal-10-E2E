@@ -1,0 +1,61 @@
+name: Cypress tests
+
+on: [workflow_dispatch]
+
+jobs: 
+  build_and_run:
+    # IMPORTANT: do not run on mac or windows unless you must
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+        # CACHE STEP HERE - key needs os, lando version (possibly other stuff)
+        # TODO: learn about caching
+        # - name: Setup cache (lando, composer, whatevs)
+        #   uses: actions/cache@v3
+        #   with:
+          #     key: ${{ runner.os }}-lando${{ steps }}- 
+            #     path: 
+
+      - name: Cypress npm install (+ real events)
+        run: npm install cypress --save-dev && npm install cypress-real-events
+        
+      # TODO: Make this faster
+      - name: Setup Lando
+        uses: lando/setup-lando@v2
+      
+      - name: Composer install
+        run: composer install
+
+      # TODO: Make this faster
+      # TODO: use the right lando version
+      - name: lando start
+        run: lando start && lando rebuild -y
+            
+      - name: Make core.extension.yml use minimal profile
+        # For mac: sed -i '' 's/standard/minimal/g' config/sync/core.extension.yml
+        run: sed -i 's/standard/minimal/g' config/sync/core.extension.yml
+
+      # TODO: Make this faster, and use variables for the db-url & password
+      - name: Install site using drush
+        run: lando drush si --db-url=mysql://drupal8:drupal8@database:3306/drupal8 --account-pass=ACCOUNT-PASS --existing-config -y
+
+      - name: Turn off css & js aggregation
+        run: lando drush -y config-set system.performance css.preprocess 0 && lando drush -y config-set system.performance js.preprocess 0
+      
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+
+  # run-tests:
+  #   needs: build    # build job must successfully run first
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
+
+  #     - name: Cypress run
+  #       uses: cypress-io/github-action@v6
+
+# command for local testing: act -W .github/workflows/cypress.yml -s GITHUB_TOKEN="$(gh auth token)"
+# prerequisites - install act, gh cli
