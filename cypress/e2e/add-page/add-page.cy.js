@@ -27,12 +27,7 @@ describe("Does add page stuff", {testIsolation: false}, () => {
         cy.get('[data-drupal-selector="edit-submit"]').click();
 
         // Check that title and body text were saved
-        // TODO: better selector, kraken not always present
-        cy.get('#block-kraken-pagetitle span').should("contain", titleMessage);
-        cy.get('#block-kraken-mainpagecontent p').should("contain", bodyMessage);
-
-        // Delete new page after (NOTE: not really necessary unless we care about test isolation)
-        cy.get('#block-kraken-tabs [data-drupal-link-system-path$="/delete"]').click();
-        cy.get('[data-drupal-selector="edit-submit"]').click();
+        cy.get('.page-title').should("contain", titleMessage);
+        cy.get('.node--type-ubc-page').should("contain", bodyMessage);
     })
 })

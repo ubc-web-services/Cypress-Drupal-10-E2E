@@ -42,7 +42,7 @@ describe('Generic Test Suite - Status Page', {testIsolation: false}, () => {
         cy.get('.system-status-report-counters > :nth-child(2)').contains(/[0-9]* Warnings/).should('contain', '0 Warnings');
     })
 
-    it.only('Checks that PHP APCu is enabled', () => {
+    it('Checks that PHP APCu is enabled', () => {
         cy.get('.system-status-report__row')
             .contains('.system-status-report__status-title', 'PHP APCu caching')
             .parent().within(() => {
