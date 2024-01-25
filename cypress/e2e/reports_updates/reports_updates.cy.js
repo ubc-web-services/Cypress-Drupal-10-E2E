@@ -1,19 +1,6 @@
 import { doLogin } from "../helpers/helpers.cy.js"
 
 describe("Generic Test Suite - reports/updates", () => {
-    Cypress.on('uncaught:exception', (err, runnable) => {
-        if (err.message.includes("Failed to execute 'observe' on 'IntersectionObserver'")) {
-            return false
-        }
-        if (err.message.includes("drupalSettings is not defined")) {
-            return false
-        }
-        if (err.message.includes("Drupal is not defined")) {
-            return false
-        }
-        return true;
-    })
-
     beforeEach(() => {
         cy.doLogin();
     })

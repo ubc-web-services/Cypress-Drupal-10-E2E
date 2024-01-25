@@ -12,7 +12,7 @@ describe("Generic Test Suite - reports/updates", () => {
 
     it("Checks for critical errors (should be none)", () => {
         cy.get('#edit_severity_chosen').click()
-        // Choose option 'critical' TODO: better selector?
+        // Choose option 'critical'      TODO: better selector?
         cy.get('[data-option-array-index="2"]').click();
         cy.get('#edit-submit-watchdog').click();
 
