@@ -1,0 +1,5 @@
+"patches": {
+    "drupal/google_analytics": {
+        "google-analytics existing-config fix: https://www.drupal.org/project/google_analytics/issues/3373921#comment-15182722": "https://www.drupal.org/files/issues/2023-08-07/google-analytics-issues-3373921-cannot-install-from-existing-config-11.patch"
+    }
+}
