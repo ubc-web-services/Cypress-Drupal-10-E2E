@@ -9,8 +9,8 @@ module.exports = defineConfig({
     },
     baseUrl: 'https://example.it.ubc.ca.lndo.site',
 
-    // To run all tests
-    experimentalRunAllSpecs: true,
+    viewportWidth: 1440,
+    viewportHeight: 900,  
     
     // Can reduce failure time here
     defaultCommandTimeout: 2000,
@@ -18,6 +18,6 @@ module.exports = defineConfig({
     // Exclude helper commands from potentially being run
     excludeSpecPattern: [
       "cypress/e2e/helpers/"
-    ]
+    ],
   },
 })
