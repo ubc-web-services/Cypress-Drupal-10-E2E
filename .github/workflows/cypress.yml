@@ -1,6 +1,6 @@
 name: Cypress tests
 
-on: [workflow_dispatch]
+on: [push]
 
 env:
   PLATFORMSH_CLI_TOKEN: ${{ secrets.PLATFORMSH_CLI_TOKEN }}   # leave this alone
@@ -12,17 +12,18 @@ env:
 jobs: 
   build_and_run:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
     steps: 
       - name: Checkout repository
         uses: actions/checkout@v4
         
-      # Install cypress, lando, composer dependencies
+      # Install cypress, lando, composer dependencies (also does npm install, I think)
       - name: Cypress npm install (+ real events)
-        run: npm install cypress --save-dev && npm install cypress-real-events
+        run: npm install cypress --save-dev && npm install cypress-real-events --save-dev
         
       - name: Setup Lando
         uses: lando/setup-lando@v2
+        with: 
+          lando-version: 3.20.8
       
       - name: Composer install
         run: composer install
@@ -40,11 +41,12 @@ jobs:
           ssh-keyscan git.ca-1.platform.sh >> ~/.ssh/known_hosts
       # ------------ END PSH SETUP -------------
           
-      # TODO: use the right lando version
-      - name: Start local site, set up initial db config
-        run: | 
-          lando start && lando rebuild -y
-          lando drush si --db-url=mysql://${{ env.DB_USER }}:${{ env.DB_PASSWORD }}@database:3306/${{ env.DB_NAME }} -y
+      # TODO: use the right lando version to avoid the need of rebuild
+      - name: Start local site
+        run: lando start && lando rebuild -y
+          
+      - name: Initial config setup
+        run: lando drush si --db-url=mysql://${{ env.DB_USER }}:${{ env.DB_PASSWORD }}@database:3306/${{ env.DB_NAME }} -y
 
       - name: Get and use database from platform sh
         run: |
