@@ -67,7 +67,14 @@ Cypress.Commands.add('doLogin', () => {
     cy.session("Login", () => {
         cy.drush("user:login --uri=" + Cypress.config('baseUrl'))
             .then(function (url) {
-            cy.visit(url);
+            try{
+                cy.visit(url);
+            } catch (err) {
+                // Run drush cr if error
+                cy.drush("lando drush cr").then((url) => {
+                    cy.visit(url);
+                });
+            }
         });
     });
 }); 
